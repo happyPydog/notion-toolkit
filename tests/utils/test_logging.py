@@ -2,7 +2,7 @@ import unittest
 import logging
 import io
 
-from src.utils.logging import get_logger, JSONFormatter
+from notion_toolkit.utils.logging import get_logger, JSONFormatter
 
 
 class TestLogger(unittest.TestCase):

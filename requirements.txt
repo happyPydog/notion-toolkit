@@ -1,2 +1,9 @@
 rich
 python-dotenv
+notion-client
+pydantic
+
+# cli
+click
+typer
+fire
