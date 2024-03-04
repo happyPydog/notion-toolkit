@@ -108,8 +108,8 @@ class Link(BaseModel):
     An object with information about any inline link in this text, if included.
     """
 
-    url: HttpUrl | None = Field(
-        default=None,
+    url: HttpUrl = Field(
+        ...,
         description="web address",
         examples=["https://developers.notion.com/"],
     )
@@ -317,8 +317,8 @@ class TextObject(BaseModel):
         description="	The actual text content of the text.",
         examples=["Some words "],
     )
-    link: Link = Field(
-        ...,
+    link: Link | None = Field(
+        default=None,
         description="An object with information about any inline link in this text, if included. If the text contains an inline link, then the object key is url and the value is the URL’s string web address. If the text doesn’t have any inline links, then the value is null.",
         examples=[{"url": "https://developers.notion.com/"}],
     )
@@ -372,7 +372,11 @@ class RichText(BaseModel):
     def create_for_text(cls, content: str, link: str | None = None) -> "RichText":
         return cls(
             type=RichTextObjectType.TEXT,
-            text=TextObject(content=content, link=Link(url=link)),
+            text=(
+                TextObject(content=content)
+                if link is None
+                else TextObject(content=content, link=Link(url=link))
+            ),
             plain_text=content,
         )
 
