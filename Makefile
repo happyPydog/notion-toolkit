@@ -8,3 +8,6 @@ install:
 
 update lock:
 	poetry lock --no-update
+
+mypy:
+	poetry run mypy src
